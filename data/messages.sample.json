@@ -1,0 +1,86 @@
+{
+  "_generated": "Sample data — shown only when data/messages.json is missing. Safe to keep.",
+  "count": 8,
+  "messages": [
+    {
+      "id": "sample-1",
+      "author": "Pixelotte",
+      "avatar": null,
+      "date": "2026-10-24T18:12:00+00:00",
+      "lang": "FR",
+      "content": "Joyeux anniversaire MOTHER !! 🎉\nMerci pour toutes ces soirées, tes streams m'ont littéralement sauvé des semaines pas ouf. **Love sur toi** 💜",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-2",
+      "author": "kurogane_dev",
+      "avatar": null,
+      "date": "2026-10-24T19:40:00+00:00",
+      "lang": "EN",
+      "content": "happy birthday!!! been here since the early days and it's crazy to see how far the community has come. you deserve all of it 🥳",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-3",
+      "author": "Mélodie",
+      "avatar": null,
+      "date": "2026-10-25T09:03:00+00:00",
+      "lang": "FR",
+      "content": "Bon anniversaire ! J'ai fait un petit dessin, j'espère qu'il te plaira 🎨",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-4",
+      "author": "NullPointer",
+      "avatar": null,
+      "date": "2026-10-25T13:27:00+00:00",
+      "lang": "EN",
+      "content": "> MOTHER.age++\nSystem update successful. Happy birthday! 🎂\nThanks for making Twitch a comfy place.",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-5",
+      "author": "Biscotte",
+      "avatar": null,
+      "date": "2026-10-25T21:55:00+00:00",
+      "lang": "FR",
+      "content": "Joyeux anniv' !!! Je suis pas très doué pour les mots mais merci d'exister, sincèrement. Et merci aux modos aussi pour le serveur 🫶",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-6",
+      "author": "Aurora",
+      "avatar": null,
+      "date": "2026-10-26T11:10:00+00:00",
+      "lang": "EN",
+      "content": "HAPPY BIRTHDAY 🎉🎉🎉\nI made a little edit of my fav moments from this year, hope it makes you smile!",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-7",
+      "author": "Tonton Raclette",
+      "avatar": null,
+      "date": "2026-10-27T17:48:00+00:00",
+      "lang": "FR",
+      "content": "Bon anniversaire à la meilleure ! On attend le stream anniversaire avec impatience 🧀🎂",
+      "images": [],
+      "pinned": false
+    },
+    {
+      "id": "sample-8",
+      "author": "Cassiopée",
+      "avatar": null,
+      "date": "2026-10-28T22:02:00+00:00",
+      "lang": "FR",
+      "content": "Joyeux anniversaire 🎁\nUne année de plus à rire, pleurer devant les jeux d'horreur et spammer des emotes. Vivement la suivante.",
+      "images": [],
+      "pinned": false
+    }
+  ]
+}

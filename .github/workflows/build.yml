@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Auto-build the page data on push. DISABLED BY DEFAULT.
+#
+# As shipped this workflow only runs when you trigger it by hand
+# (Actions tab -> "Build site data" -> Run workflow). To make it run
+# automatically on every relevant push, uncomment the `push:` block below.
+#
+# Note: inbox/ is gitignored, so the Action never sees your raw Discord
+# exports — it can only rebuild from versioned inputs (data/manual.json,
+# data/overrides.json, img/magma/source.png). Full Discord rebuilds are
+# done locally with `python tools/build.py`, then pushed.
+# ---------------------------------------------------------------------------
+name: Build site data
+
+on:
+  workflow_dispatch: {}
+  # To enable automatic builds, uncomment:
+  # push:
+  #   paths:
+  #     - "data/manual.json"
+  #     - "data/overrides.json"
+  #     - "img/magma/source.png"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Pillow
+        run: python -m pip install --upgrade Pillow
+
+      - name: Build
+        run: python tools/build.py
+
+      - name: Commit generated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/messages.json data/version.json img
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "chore: rebuild site data [skip ci]"
+            git push
+          fi

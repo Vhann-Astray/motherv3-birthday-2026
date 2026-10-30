@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday MOTHERv3</title>
+<meta name="description" content="A birthday guestbook for MOTHERv3, from the community.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ===== Halloween overlay (birthday falls on Halloween) ===== -->
+<div class="halloween" aria-hidden="true">
+  <svg class="web web-l" viewBox="0 0 160 160"><path d="M0 0L149.6 10.5M0 0L140.0 53.8M0 0L118.2 92.3M0 0L86.0 122.9M0 0L46.4 142.7M0 0L5.2 149.9M29.9 2.1Q23.4 5.2 28.0 10.8M28.0 10.8Q20.9 11.8 23.6 18.5M23.6 18.5Q16.5 17.4 17.2 24.6M17.2 24.6Q10.7 21.5 9.3 28.5M9.3 28.5Q4.2 23.6 1.0 30.0M61.8 4.3Q48.4 10.7 57.9 22.2M57.9 22.2Q43.2 24.4 48.9 38.2M48.9 38.2Q34.1 36.0 35.6 50.8M35.6 50.8Q22.1 44.4 19.2 59.0M19.2 59.0Q8.6 48.8 2.2 62.0M94.8 6.6Q74.2 16.4 88.7 34.0M88.7 34.0Q66.1 37.4 74.9 58.5M74.9 58.5Q52.3 55.1 54.5 77.8M54.5 77.8Q33.9 68.0 29.4 90.4M29.4 90.4Q13.2 74.8 3.3 94.9M127.7 8.9Q100.0 22.2 119.5 45.9M119.5 45.9Q89.1 50.4 100.9 78.8M100.9 78.8Q70.5 74.3 73.4 104.9M73.4 104.9Q45.7 91.6 39.6 121.7M39.6 121.7Q17.8 100.8 4.5 127.9"/></svg>
+  <svg class="web web-r" viewBox="0 0 160 160"><path d="M0 0L149.6 10.5M0 0L140.0 53.8M0 0L118.2 92.3M0 0L86.0 122.9M0 0L46.4 142.7M0 0L5.2 149.9M29.9 2.1Q23.4 5.2 28.0 10.8M28.0 10.8Q20.9 11.8 23.6 18.5M23.6 18.5Q16.5 17.4 17.2 24.6M17.2 24.6Q10.7 21.5 9.3 28.5M9.3 28.5Q4.2 23.6 1.0 30.0M61.8 4.3Q48.4 10.7 57.9 22.2M57.9 22.2Q43.2 24.4 48.9 38.2M48.9 38.2Q34.1 36.0 35.6 50.8M35.6 50.8Q22.1 44.4 19.2 59.0M19.2 59.0Q8.6 48.8 2.2 62.0M94.8 6.6Q74.2 16.4 88.7 34.0M88.7 34.0Q66.1 37.4 74.9 58.5M74.9 58.5Q52.3 55.1 54.5 77.8M54.5 77.8Q33.9 68.0 29.4 90.4M29.4 90.4Q13.2 74.8 3.3 94.9M127.7 8.9Q100.0 22.2 119.5 45.9M119.5 45.9Q89.1 50.4 100.9 78.8M100.9 78.8Q70.5 74.3 73.4 104.9M73.4 104.9Q45.7 91.6 39.6 121.7M39.6 121.7Q17.8 100.8 4.5 127.9"/></svg>
+  <div class="moon"></div>
+  <div class="bats">
+    <span class="bat b1">🦇</span>
+    <span class="bat b2">🦇</span>
+    <span class="bat b3">🦇</span>
+    <span class="bat b4">🦇</span>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <div class="boot" id="boot">&gt; MOTHERv3.sys booting... <span class="ok">[OK]</span> summoning community.messages 🎃 <span class="cursor"></span></div>
+  <h1 id="hero-title">Happy Birthday<br><span class="grad">MOTHERv3</span></h1>
+  <p class="intro" id="hero-intro">
+    Your community got together to leave you a little something: one big drawing made by many hands, and a whole lot of messages.
+    Take your time, it's all here.
+  </p>
+  <div class="stats">
+    <span><b id="stat-msg">0</b> messages</span>
+    <span><b id="stat-img">0</b> images</span>
+    <span><b>1</b> Magma</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== MAGMA ===== -->
+  <section id="magma">
+    <div class="section-title"><h2><span>01</span>The community board</h2></div>
+    <div class="magma">
+      <img id="magma-img" alt="Community Magma board, drawn together by the community" loading="lazy">
+      <div class="magma-bar">
+        <span>Drawn together by the community on Magma. Click to open the zoomable viewer.</span>
+        <a class="btn primary" id="magma-live" href="#" target="_blank" rel="noopener">Open the live board →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MESSAGES ===== -->
+  <section id="messages">
+    <div class="section-title">
+      <h2><span>02</span>Discord messages</h2>
+      <div class="controls">
+        <input class="search" id="search" type="search" placeholder="Search a name..." aria-label="Search a name">
+        <span class="control-group">
+          <button class="btn" data-view="story" aria-pressed="true">Story</button>
+          <button class="btn" data-view="wall" aria-pressed="false">Wall</button>
+        </span>
+        <span class="control-group">
+          <button class="btn" data-sort="chrono" aria-pressed="true">Chronological</button>
+          <button class="btn" data-sort="random" aria-pressed="false">Shuffle</button>
+        </span>
+      </div>
+    </div>
+    <div class="wall story" id="wall" aria-live="polite"></div>
+    <p class="empty" id="empty">Nobody by that name.</p>
+  </section>
+
+</main>
+
+<footer id="footer">
+  Made by the stupid duck 🦆🎃
+</footer>
+
+<!-- Lightbox for message attachments -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <img alt="">
+</div>
+
+<!-- Fullscreen zoom/pan viewer for the Magma board -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Magma board viewer">
+  <div class="viewer-stage" id="viewer-stage">
+    <img class="viewer-img" id="viewer-img" alt="Community Magma board (full resolution)" draggable="false">
+    <div class="viewer-osd" id="viewer-osd"></div>
+  </div>
+  <div class="viewer-toolbar">
+    <button class="btn" id="viewer-reset" type="button">Reset</button>
+    <button class="btn" id="viewer-close" type="button" aria-label="Close viewer">Close ✕</button>
+  </div>
+  <div class="viewer-hint">Scroll / pinch to zoom · drag to pan · double-click to toggle · Esc to close</div>
+</div>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>

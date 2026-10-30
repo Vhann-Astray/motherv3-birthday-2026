@@ -1,0 +1,34 @@
+# --- Raw community exports: NOT versioned ---------------------------------
+# The repo is public and these contain raw Discord data (ids, avatars,
+# un-filtered content). Build locally; only the cleaned output in /data and
+# /img is committed. Keep the folders (but not their contents) via .gitkeep.
+/inbox/discord/*
+!/inbox/discord/.gitkeep
+/inbox/manual/*
+!/inbox/manual/.gitkeep
+/inbox/discord-html/*
+!/inbox/discord-html/.gitkeep
+/inbox/decor/*
+!/inbox/decor/.gitkeep
+
+# Local-only incremental build cache (rebuilt automatically).
+/data/.build-cache.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# NOTE: generated output IS versioned on purpose, GitHub Pages serves it:
+#   data/messages.json, data/version.json
+#   img/avatars/, img/attachments/, img/emoji/, img/videos/, img/magma/*.webp, img/magma/tiles/
+#   img/magma/source.png  (your retouched board — commit it)

@@ -1,0 +1,24 @@
+{
+  "__comment__": "Curated placement for side decorations. build.py reads this and never rewrites it. Each item: file (required), side (left|right), top (% down the page), width (px on screen), rotate (deg), opacity (0-1), speed (parallax, ~0.04-0.1), inset (px from the edge). Files in inbox/decor/ not listed here are auto-placed. Drop new art in inbox/decor/ and add a line here to position it.",
+  "items": [
+    { "file": "comfy.png",                   "side": "left",  "top": 6,  "width": 200, "rotate": -8, "opacity": 0.92, "speed": 0.05 },
+    { "file": "v31.png",                      "side": "right", "top": 11, "width": 250, "rotate": 5,  "opacity": 0.88, "speed": 0.05 },
+    { "file": "run.gif",                      "side": "left",  "top": 16, "width": 180, "rotate": -6, "opacity": 0.92, "speed": 0.09, "inset": 72 },
+    { "file": "love.png",                     "side": "right", "top": 21, "width": 270, "rotate": -5, "opacity": 0.90, "speed": 0.06 },
+    { "file": "wow.png",                      "side": "left",  "top": 26, "width": 230, "rotate": 6,  "opacity": 0.90, "speed": 0.07 },
+    { "file": "3847770-4.gif",                "side": "right", "top": 31, "width": 190, "rotate": 8,  "opacity": 0.92, "speed": 0.08, "inset": 82 },
+    { "file": "v3-glomps.png",                "side": "left",  "top": 36, "width": 320, "rotate": -4, "opacity": 0.90, "speed": 0.045 },
+    { "file": "1749238-3.png",                "side": "right", "top": 41, "width": 310, "rotate": 5,  "opacity": 0.88, "speed": 0.045 },
+    { "file": "autismo.gif",                  "side": "left",  "top": 46, "width": 230, "rotate": -6, "opacity": 0.90, "speed": 0.075, "inset": 72 },
+    { "file": "Awo.png",                      "side": "right", "top": 51, "width": 300, "rotate": 6,  "opacity": 0.88, "speed": 0.05 },
+    { "file": "2068558-6_1.png",              "side": "left",  "top": 56, "width": 280, "rotate": -3, "opacity": 0.90, "speed": 0.05 },
+    { "file": "ass shake.gif",                "side": "right", "top": 61, "width": 190, "rotate": 6,  "opacity": 0.92, "speed": 0.09, "inset": 82 },
+    { "file": "mothersmert.png",              "side": "left",  "top": 66, "width": 210, "rotate": -7, "opacity": 0.90, "speed": 0.08 },
+    { "file": "3780942-4.png",                "side": "right", "top": 71, "width": 300, "rotate": 4,  "opacity": 0.90, "speed": 0.045 },
+    { "file": "2286230-3.gif",                "side": "left",  "top": 76, "width": 240, "rotate": -5, "opacity": 0.90, "speed": 0.07 },
+    { "file": "XMAS_COMFY_MOTHERv3.png",      "side": "right", "top": 81, "width": 230, "rotate": 4,  "opacity": 0.90, "speed": 0.08 },
+    { "file": "MV3_FRENCH_ORIGINAL.png",      "side": "left",  "top": 86, "width": 230, "rotate": -5, "opacity": 0.90, "speed": 0.06 },
+    { "file": "v32.png",                      "side": "right", "top": 91, "width": 260, "rotate": 5,  "opacity": 0.88, "speed": 0.05 },
+    { "file": "vts_2026-07-05_21-42-44.png",  "side": "left",  "top": 96, "width": 300, "rotate": -3, "opacity": 0.85, "speed": 0.045 }
+  ]
+}

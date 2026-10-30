@@ -1,0 +1,186 @@
+{
+  "_generated": "Do not edit by hand — produced by tools/build.py.",
+  "messages": "67d3542279770f50",
+  "magma": null,
+  "magmaWeb": null,
+  "magmaFull": null,
+  "magmaTiles": false,
+  "decor": [
+    {
+      "src": "img/decor/comfy.webp",
+      "side": "left",
+      "top": 6,
+      "width": 200,
+      "rotate": -8,
+      "opacity": 0.92,
+      "speed": 0.05
+    },
+    {
+      "src": "img/decor/v31.webp",
+      "side": "right",
+      "top": 11,
+      "width": 250,
+      "rotate": 5,
+      "opacity": 0.88,
+      "speed": 0.05
+    },
+    {
+      "src": "img/decor/run.gif",
+      "side": "left",
+      "top": 16,
+      "width": 180,
+      "rotate": -6,
+      "opacity": 0.92,
+      "speed": 0.09,
+      "inset": 72
+    },
+    {
+      "src": "img/decor/love.webp",
+      "side": "right",
+      "top": 21,
+      "width": 270,
+      "rotate": -5,
+      "opacity": 0.9,
+      "speed": 0.06
+    },
+    {
+      "src": "img/decor/wow.webp",
+      "side": "left",
+      "top": 26,
+      "width": 230,
+      "rotate": 6,
+      "opacity": 0.9,
+      "speed": 0.07
+    },
+    {
+      "src": "img/decor/3847770-4.gif",
+      "side": "right",
+      "top": 31,
+      "width": 190,
+      "rotate": 8,
+      "opacity": 0.92,
+      "speed": 0.08,
+      "inset": 82
+    },
+    {
+      "src": "img/decor/v3-glomps.webp",
+      "side": "left",
+      "top": 36,
+      "width": 320,
+      "rotate": -4,
+      "opacity": 0.9,
+      "speed": 0.045
+    },
+    {
+      "src": "img/decor/1749238-3.webp",
+      "side": "right",
+      "top": 41,
+      "width": 310,
+      "rotate": 5,
+      "opacity": 0.88,
+      "speed": 0.045
+    },
+    {
+      "src": "img/decor/autismo.gif",
+      "side": "left",
+      "top": 46,
+      "width": 230,
+      "rotate": -6,
+      "opacity": 0.9,
+      "speed": 0.075,
+      "inset": 72
+    },
+    {
+      "src": "img/decor/Awo.webp",
+      "side": "right",
+      "top": 51,
+      "width": 300,
+      "rotate": 6,
+      "opacity": 0.88,
+      "speed": 0.05
+    },
+    {
+      "src": "img/decor/2068558-6_1.webp",
+      "side": "left",
+      "top": 56,
+      "width": 280,
+      "rotate": -3,
+      "opacity": 0.9,
+      "speed": 0.05
+    },
+    {
+      "src": "img/decor/ass-shake.gif",
+      "side": "right",
+      "top": 61,
+      "width": 190,
+      "rotate": 6,
+      "opacity": 0.92,
+      "speed": 0.09,
+      "inset": 82
+    },
+    {
+      "src": "img/decor/mothersmert.webp",
+      "side": "left",
+      "top": 66,
+      "width": 210,
+      "rotate": -7,
+      "opacity": 0.9,
+      "speed": 0.08
+    },
+    {
+      "src": "img/decor/3780942-4.webp",
+      "side": "right",
+      "top": 71,
+      "width": 300,
+      "rotate": 4,
+      "opacity": 0.9,
+      "speed": 0.045
+    },
+    {
+      "src": "img/decor/2286230-3.gif",
+      "side": "left",
+      "top": 76,
+      "width": 240,
+      "rotate": -5,
+      "opacity": 0.9,
+      "speed": 0.07
+    },
+    {
+      "src": "img/decor/XMAS_COMFY_MOTHERv3.webp",
+      "side": "right",
+      "top": 81,
+      "width": 230,
+      "rotate": 4,
+      "opacity": 0.9,
+      "speed": 0.08
+    },
+    {
+      "src": "img/decor/MV3_FRENCH_ORIGINAL.webp",
+      "side": "left",
+      "top": 86,
+      "width": 230,
+      "rotate": -5,
+      "opacity": 0.9,
+      "speed": 0.06
+    },
+    {
+      "src": "img/decor/v32.webp",
+      "side": "right",
+      "top": 91,
+      "width": 260,
+      "rotate": 5,
+      "opacity": 0.88,
+      "speed": 0.05
+    },
+    {
+      "src": "img/decor/vts_2026-07-05_21-42-44.webp",
+      "side": "left",
+      "top": 96,
+      "width": 300,
+      "rotate": -3,
+      "opacity": 0.85,
+      "speed": 0.045
+    }
+  ],
+  "decorHash": "aa2dbc3971c5"
+}
