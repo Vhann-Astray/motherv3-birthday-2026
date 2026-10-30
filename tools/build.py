@@ -341,21 +341,21 @@ class _ContentRenderer(HTMLParser):
         if tag == "img" and "emoji" in cls:
             raw_alt = a.get("alt") or ""
             src = a.get("src") or ""
-            if not raw_alt.startswith(":"):
-                # standard unicode emoji (Twemoji svg): keep the character itself
-                self.parts.append(raw_alt)
-            else:
+            # Custom Discord emoji are served from /emojis/ (alt may or may not
+            # carry surrounding colons); standard emoji are Twemoji svgs whose
+            # alt IS the unicode character.
+            if src.startswith("http") and "/emojis/" in src:
                 name = raw_alt.strip(":") or "emoji"
-                web = None
-                if src.startswith("http") and "/emojis/" in src:
-                    web, _ = emit_image(
-                        ("url", htmllib.unescape(src)), ".webp",
-                        os.path.join(IMG_DIR, "emoji"),
-                        a.get("data-id") or name, EMOJI_MAX, self.cache, self.ctx,
-                    )
+                web, _ = emit_image(
+                    ("url", htmllib.unescape(src)), ".webp",
+                    os.path.join(IMG_DIR, "emoji"),
+                    a.get("data-id") or name, EMOJI_MAX, self.cache, self.ctx,
+                )
                 self.parts.append(
                     f"{TOK_A}e|{web}|{name}{TOK_B}" if web else f":{name}:"
                 )
+            else:
+                self.parts.append(raw_alt)
         elif tag == "span" and "mention" in cls:
             self.in_mention += 1
             if self.in_mention == 1:
