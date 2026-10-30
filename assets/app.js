@@ -214,10 +214,16 @@ function applyConfigText() {
 function updateStats() {
   $("#stat-msg").textContent = MESSAGES.length;
   $("#stat-img").textContent = MESSAGES.reduce(
-    (n, m) =>
-      n + (m.images ? m.images.length : 0) + (m.videos ? m.videos.length : 0),
+    (n, m) => n + (m.images ? m.images.length : 0),
     0
   );
+  const vid = $("#stat-vid");
+  if (vid) {
+    vid.textContent = MESSAGES.reduce(
+      (n, m) => n + (m.videos ? m.videos.length : 0),
+      0
+    );
+  }
 }
 
 /* ---------- Wall rendering ---------- */

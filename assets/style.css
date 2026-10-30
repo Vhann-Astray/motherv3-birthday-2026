@@ -38,7 +38,10 @@ body {
   filter: drop-shadow(0 10px 26px rgba(0, 0, 0, .35));
   animation: decorFloat 7s ease-in-out infinite;
 }
-@keyframes decorFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes decorFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-22px) rotate(2.5deg); }
+}
 /* Keep content above the decorations. */
 header.hero, main, footer { position: relative; z-index: 1; }
 @media (max-width: 1100px) { .decor-layer { display: none; } }
@@ -118,7 +121,11 @@ section { padding: 40px 0; }
   border-radius: var(--radius); overflow: hidden; border: 1px solid var(--card-border);
   background: var(--card); box-shadow: 0 20px 60px rgba(0,0,0,.4);
 }
-.magma img { display: block; width: 100%; cursor: zoom-in; transition: transform .4s; }
+.magma img {
+  display: block; margin: 0 auto;
+  width: auto; max-width: 100%; height: auto; max-height: 440px;
+  cursor: zoom-in; transition: transform .4s;
+}
 .magma:hover img { transform: scale(1.01); }
 .magma-empty {
   display: grid; place-items: center; min-height: 260px; padding: 48px 24px;
