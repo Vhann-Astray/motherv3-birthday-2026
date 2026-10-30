@@ -219,8 +219,10 @@ function updateStats() {
   );
   const vid = $("#stat-vid");
   if (vid) {
+    // Count uploaded videos + embedded YouTube videos.
     vid.textContent = MESSAGES.reduce(
-      (n, m) => n + (m.videos ? m.videos.length : 0),
+      (n, m) =>
+        n + (m.videos ? m.videos.length : 0) + (m.youtube ? m.youtube.length : 0),
       0
     );
   }
