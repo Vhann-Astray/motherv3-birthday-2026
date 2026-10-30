@@ -1,9 +1,9 @@
 {
   "_generated": "Do not edit by hand — produced by tools/build.py.",
   "messages": "67d3542279770f50",
-  "magma": null,
-  "magmaWeb": null,
-  "magmaFull": null,
+  "magma": "41867b177add96bf",
+  "magmaWeb": "img/magma/magma-web.webp",
+  "magmaFull": "img/magma/magma-full.webp",
   "magmaTiles": false,
   "decor": [
     {

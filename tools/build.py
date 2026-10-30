@@ -56,7 +56,13 @@ MANUAL_JSON = os.path.join(DATA_DIR, "manual.json")
 OVERRIDES_JSON = os.path.join(DATA_DIR, "overrides.json")
 CACHE_JSON = os.path.join(DATA_DIR, ".build-cache.json")
 
-MAGMA_SOURCE = os.path.join(MAGMA_DIR, "source.png")
+def find_magma_source():
+    """The Magma board source: img/magma/source.{png,jpg,jpeg,webp} (first found)."""
+    for ext in (".png", ".jpg", ".jpeg", ".webp"):
+        p = os.path.join(MAGMA_DIR, "source" + ext)
+        if os.path.exists(p):
+            return p
+    return None
 
 # Sentinel tokens that survive HTML escaping in app.js (interlinear controls,
 # never present in real text). Keep in sync with assets/app.js.
@@ -910,15 +916,16 @@ def build_decor(cache, ctx):
 
 def build_magma(ctx, version):
     """Generate magma-web / magma-full (+ optional tiles). Returns 'changed'/'unchanged'/'missing'."""
-    if not os.path.exists(MAGMA_SOURCE):
-        print("  ! img/magma/source.png not found — Magma board skipped")
+    magma_src = find_magma_source()
+    if not magma_src:
+        print("  ! img/magma/source.{png,jpg,jpeg,webp} not found — Magma board skipped")
         version["magma"] = None
         version["magmaWeb"] = None
         version["magmaFull"] = None
         version["magmaTiles"] = False
         return "missing"
 
-    src_hash = sha1_file(MAGMA_SOURCE)[:16]
+    src_hash = sha1_file(magma_src)[:16]
     prev = read_json(VERSION_JSON, default={}) or {}
     web_abs = os.path.join(MAGMA_DIR, "magma-web.webp")
     full_abs = os.path.join(MAGMA_DIR, "magma-full.webp")
@@ -937,8 +944,8 @@ def build_magma(ctx, version):
     version["magma"] = src_hash
 
     if not need and not tiles_need:
-        version["magmaWeb"] = web_path(web_abs) if os.path.exists(web_abs) else web_path(MAGMA_SOURCE)
-        version["magmaFull"] = web_path(full_abs) if os.path.exists(full_abs) else web_path(MAGMA_SOURCE)
+        version["magmaWeb"] = web_path(web_abs) if os.path.exists(web_abs) else web_path(magma_src)
+        version["magmaFull"] = web_path(full_abs) if os.path.exists(full_abs) else web_path(magma_src)
         version["magmaTiles"] = os.path.exists(dzi_abs)
         if version["magmaTiles"]:
             version["magmaTilesDir"] = web_path(dzi_abs)
@@ -954,12 +961,12 @@ def build_magma(ctx, version):
 
     if not HAVE_PIL:
         print("  ! Pillow not installed — Magma served as-is (no resize/webp)")
-        version["magmaWeb"] = web_path(MAGMA_SOURCE)
-        version["magmaFull"] = web_path(MAGMA_SOURCE)
+        version["magmaWeb"] = web_path(magma_src)
+        version["magmaFull"] = web_path(magma_src)
         version["magmaTiles"] = False
         return "changed"
 
-    im = Image.open(MAGMA_SOURCE)
+    im = Image.open(magma_src)
     im = im.convert("RGBA") if im.mode in ("RGBA", "LA", "P") else im.convert("RGB")
 
     # Full resolution, optimised.
