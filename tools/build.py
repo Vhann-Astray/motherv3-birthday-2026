@@ -486,6 +486,10 @@ def parse_discord_html(cache, ctx, counters):
             if cm:
                 acc = re.search(r'id="message-accessories-%s"' % mid, block)
                 content_html = block[cm.end():(acc.start() if acc else len(block))]
+                # Drop the trailing inline "(edited)" marker + its hidden date.
+                ts = content_html.find('<span class="timestamp_')
+                if ts != -1:
+                    content_html = content_html[:ts]
                 r = _ContentRenderer(cache, ctx)
                 r.feed(content_html)
                 content = r.text().replace("\r\n", "\n").strip()
