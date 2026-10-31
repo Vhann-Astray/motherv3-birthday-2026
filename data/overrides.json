@@ -1,5 +1,7 @@
 {
   "__comment__": "Per-message tweaks, keyed by message id. All fields optional: lang ('FR'|'EN'|null), content (corrected text), author (display name), hidden (true removes it), pinned (true keeps it on top). build.py never rewrites this file.",
 
-  "1565022912707305684": { "hidden": true }
+  "1565022912707305684": { "hidden": true },
+  "1565850875719721030": {"hidden":true}
 }
+
