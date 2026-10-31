@@ -1,6 +1,6 @@
 {
   "_generated": "Do not edit by hand — produced by tools/build.py.",
-  "count": 24,
+  "count": 25,
   "messages": [
     {
       "id": "1565030870639845570",
@@ -357,6 +357,21 @@
       "content": "To the most lovable, cute, sexy and yet funny vtuber that I care for so much, Motherv3! I wish you nothing but the best birthday ever! I want you to enjoy every moment of your life! Love you so much!",
       "images": [
         "img/attachments/1566110858549919836-0.webp"
+      ],
+      "videos": [],
+      "youtube": [],
+      "stickers": [],
+      "pinned": false
+    },
+    {
+      "id": "1566122667785068724",
+      "author": "(Ghost of a Skooma addict)",
+      "avatar": "img/avatars/569811311119302677.webp",
+      "date": "2026-10-31T16:12:21.152Z",
+      "lang": "EN",
+      "content": "For the pretty funny AI lady that gets me in a good mood even when things get dim in my life. Happy birthday Motherv3. You are the Teletubbies sun in this eyeball's life",
+      "images": [
+        "img/attachments/1566122667785068724-0.gif"
       ],
       "videos": [],
       "youtube": [],
