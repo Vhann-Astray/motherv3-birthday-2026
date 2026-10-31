@@ -418,7 +418,8 @@ function fitImage() {
   const vh = stage.clientHeight;
   const sc = Math.min(vw / view.natW, vh / view.natH);
   view.min = sc;
-  view.max = Math.max(sc * 8, 1); // allow zooming to ~8x the fit size
+  // Allow zooming well past the fit size and past 1:1 (detail inspection).
+  view.max = Math.max(sc * 18, 6);
   view.scale = sc;
   view.tx = (vw - view.natW * sc) / 2;
   view.ty = (vh - view.natH * sc) / 2;
@@ -593,6 +594,7 @@ async function openWithOSD(tileSrc) {
       tileSources: tileSrc + (version.magma ? `?v=${version.magma}` : ""),
       showNavigator: true,
       navigatorPosition: "BOTTOM_RIGHT",
+      maxZoomPixelRatio: 4, // allow zooming past native pixels
       gestureSettingsMouse: { clickToZoom: false, dblClickToZoom: true },
     });
   } catch {
