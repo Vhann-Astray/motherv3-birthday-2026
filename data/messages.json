@@ -1,6 +1,6 @@
 {
   "_generated": "Do not edit by hand — produced by tools/build.py.",
-  "count": 19,
+  "count": 22,
   "messages": [
     {
       "id": "1565030870639845570",
@@ -12,6 +12,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -24,6 +25,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -36,6 +38,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -50,6 +53,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -67,6 +71,7 @@
         }
       ],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -79,6 +84,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -93,6 +99,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -105,6 +112,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -119,6 +127,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -133,6 +142,7 @@
       "youtube": [
         "n8XSrw0RCSE"
       ],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -147,6 +157,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -159,6 +170,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -171,6 +183,7 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -201,6 +214,7 @@
         }
       ],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -215,6 +229,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -229,6 +244,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -243,6 +259,7 @@
       ],
       "videos": [],
       "youtube": [],
+      "stickers": [],
       "pinned": false
     },
     {
@@ -255,6 +272,9 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [
+        "img/stickers/1237841153660030976.webp"
+      ],
       "pinned": false
     },
     {
@@ -267,6 +287,50 @@
       "images": [],
       "videos": [],
       "youtube": [],
+      "stickers": [],
+      "pinned": false
+    },
+    {
+      "id": "1566096220097875970",
+      "author": "Sundowner",
+      "avatar": "img/avatars/440704650296164372.webp",
+      "date": "2026-10-31T14:27:15.532Z",
+      "lang": "EN",
+      "content": "Happy Birthday V!!! ￹e|img/emoji/1521680105087172668.webp|AAAA￺ \n\nThank you for everything you've done for the Bytes, and this whole community! I hope you do  realize just how much of a difference you've made in so many people's lives, especially mine. You've brought together such an amazing group of people and given so many of us a place to feel welcome, make friends, and just enjoy being around each other. It really means more than you know, and I can say for certain the Bytes and I are genuinely grateful for everything you've done. I'm glad I am able to be celebrating a birthday with you and the Bytes, V. Cheers to manyyy many many more!! \n\nLubbers. ￹e|img/emoji/1549971817270214747.webp|HYPERLUBBERS￺ \nForever. 🧡",
+      "images": [],
+      "videos": [],
+      "youtube": [],
+      "stickers": [
+        "img/stickers/1237841153660030976.webp"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "1566098197728723095",
+      "author": "Hawkeyl",
+      "avatar": "img/avatars/164104795269890048.webp",
+      "date": "2026-10-31T14:35:07.036Z",
+      "lang": "EN",
+      "content": "A super happy birthday to you V. I hope you have so much fun as we go to the next one. Always have fun doing what you do V Lubbers you",
+      "images": [],
+      "videos": [],
+      "youtube": [],
+      "stickers": [
+        "img/stickers/1317312334850687006.webp"
+      ],
+      "pinned": false
+    },
+    {
+      "id": "1566108579453210685",
+      "author": "AetherVortex",
+      "avatar": "img/avatars/875546928040005682.webp",
+      "date": "2026-10-31T15:16:22.232Z",
+      "lang": "EN",
+      "content": "Upon this most auspicious day, I bid thee, Mother, a most joyous birthday. :3 ￹e|img/emoji/1489869289388245123.webp|LUBBERS~1￺ \n\n(i already said this in ⁠💬︱general-chat but i wanted to say it here just to make sure mother sees it. i hope your having a wonderful birtday. ￹e|img/emoji/1489869289388245123.webp|LUBBERS~1￺ )",
+      "images": [],
+      "videos": [],
+      "youtube": [],
+      "stickers": [],
       "pinned": false
     }
   ]

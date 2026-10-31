@@ -283,6 +283,15 @@ function cardHTML(m, i) {
     );
   });
   const attach = media.length ? `<div class="attach">${media.join("")}</div>` : "";
+  const stickers =
+    m.stickers && m.stickers.length
+      ? `<div class="stickers">${m.stickers
+          .map(
+            (s) =>
+              `<img class="sticker-img" src="${esc(s)}" alt="Sticker" loading="lazy">`
+          )
+          .join("")}</div>`
+      : "";
   return `<article class="card${m.pinned ? " pinned" : ""}" style="--c:${c};animation-delay:${Math.min(
     i * 60,
     600
@@ -293,6 +302,7 @@ function cardHTML(m, i) {
     m.author
   )}</div><div class="date">${fmtDate(m.date)}</div></div></div>
     <div class="content">${renderContent(m.content)}</div>
+    ${stickers}
     ${attach}
   </article>`;
 }

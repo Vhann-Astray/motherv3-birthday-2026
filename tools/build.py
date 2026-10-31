@@ -74,6 +74,7 @@ VIDEO_EXTS = {".mp4", ".webm", ".mov", ".m4v"}
 AVATAR_MAX = 128
 ATTACH_MAX = 2560  # big enough to zoom into inside the viewer
 EMOJI_MAX = 64
+STICKER_MAX = 320
 DECOR_MAX = 640
 
 try:
@@ -439,6 +440,7 @@ def parse_discord_html(cache, ctx, counters):
             continue
 
         last_author = last_avatar = last_uid = None
+        prev_entry = None  # last message added (for merging sticker-only msgs)
         for i, (mid, pos) in enumerate(starts):
             end = starts[i + 1][1] if i + 1 < len(starts) else len(html)
             block = html[pos:end]
@@ -561,7 +563,35 @@ def parse_discord_html(cache, ctx, counters):
                     if is_new:
                         counters["new_images"] += 1
 
-            if not content and not images and not videos and not youtube:
+            # Stickers (each usually sent as its own text-less message).
+            stickers = []
+            if acc:
+                for sm in re.finditer(
+                    r'<img\b[^>]*data-type="sticker"[^>]*>', block[acc.start():]
+                ):
+                    stag = sm.group(0)
+                    ssrc = _search(stag, r'\bsrc="([^"]+)"')
+                    sid = _search(stag, r'\bdata-id="(\d+)"')
+                    if not ssrc:
+                        continue
+                    sweb, _ = emit_image(
+                        ("url", htmllib.unescape(ssrc)), ".webp",
+                        os.path.join(IMG_DIR, "stickers"),
+                        sid or f"{mid}-{len(stickers)}", STICKER_MAX, cache, ctx,
+                    )
+                    if sweb and sweb not in stickers:
+                        stickers.append(sweb)
+
+            has_body = content or images or videos or youtube
+            # A sticker sent right after a message by the same author is folded
+            # into that message instead of standing alone.
+            if (not has_body and stickers and prev_entry is not None
+                    and prev_entry.get("author") == (author or "unknown")):
+                sl = prev_entry.setdefault("stickers", [])
+                sl.extend(s for s in stickers if s not in sl)
+                continue
+
+            if not has_body and not stickers:
                 continue
 
             avatar = None
@@ -571,7 +601,7 @@ def parse_discord_html(cache, ctx, counters):
                     uid or mid, AVATAR_MAX, cache, ctx,
                 )
 
-            by_id[mid] = {
+            entry = {
                 "id": mid,
                 "author": author or "unknown",
                 "avatar": avatar,
@@ -581,9 +611,12 @@ def parse_discord_html(cache, ctx, counters):
                 "images": images,
                 "videos": videos,
                 "youtube": youtube,
+                "stickers": stickers,
                 "pinned": False,
                 "_edited": date,
             }
+            by_id[mid] = entry
+            prev_entry = entry
 
     return by_id
 
@@ -743,6 +776,7 @@ def parse_discord_exports(cache, ctx, counters):
                 "images": images,
                 "videos": videos,
                 "youtube": yt,
+                "stickers": [],
                 "pinned": False,
                 # internal: effective edit time for dedup, stripped before output
                 "_edited": msg.get("timestampEdited") or msg.get("timestamp") or "",
@@ -803,6 +837,7 @@ def parse_manual(cache, ctx, counters):
             "images": images,
             "videos": m.get("videos", []),
             "youtube": m.get("youtube", []),
+            "stickers": m.get("stickers", []),
             "pinned": bool(m.get("pinned", False)),
             "_edited": m.get("date", ""),
         }
@@ -1044,7 +1079,7 @@ def make_dzi(im, tiles_dir, name, tile_size=254, overlap=1):
 # --------------------------------------------------------------------------- #
 def clean_unreferenced(referenced, ctx):
     removed = 0
-    for sub in ("avatars", "attachments", "emoji", "videos", "decor"):
+    for sub in ("avatars", "attachments", "emoji", "videos", "decor", "stickers"):
         d = os.path.join(IMG_DIR, sub)
         if not os.path.isdir(d):
             continue
@@ -1143,6 +1178,8 @@ def main():
                     referenced.add(vid["src"])
                 if vid.get("poster"):
                     referenced.add(vid["poster"])
+            for st in m.get("stickers", []):
+                referenced.add(st)
             for em in re.findall(r"%s e\|([^|]+)\|" % TOK_A, m.get("content", ""), re.X):
                 referenced.add(em)
         for d in version.get("decor", []):
