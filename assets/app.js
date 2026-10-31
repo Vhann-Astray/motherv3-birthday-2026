@@ -321,19 +321,7 @@ function applyView() {
 }
 searchEl.addEventListener("input", render);
 
-/* ---------- Lightbox (message attachments) ---------- */
-const lb = $("#lightbox");
-const lbImg = lb.querySelector("img");
-function openLightbox(src, alt) {
-  lbImg.src = src;
-  lbImg.alt = alt || "";
-  lb.classList.add("open");
-  $("#viewer-close")?.blur();
-}
-function closeLightbox() {
-  lb.classList.remove("open");
-  lbImg.src = "";
-}
+/* ---------- Attachment clicks -> zoom/pan viewer ---------- */
 document.addEventListener("click", (e) => {
   // YouTube facade -> load the real player (autoplay) on click.
   const yt = e.target.closest(".yt[data-yt]");
@@ -342,8 +330,7 @@ document.addEventListener("click", (e) => {
     return;
   }
   // Direct children of .attach are real images (not the YT thumbnail).
-  if (e.target.matches(".attach > img")) openLightbox(e.target.src, e.target.alt);
-  else if (e.target.closest("#lightbox")) closeLightbox();
+  if (e.target.matches(".attach > img")) openImageViewer([e.target.src]);
 });
 
 function loadYouTube(el) {
@@ -462,18 +449,18 @@ function zoomAt(cx, cy, factor) {
   applyTransform();
 }
 
-function openViewer() {
-  const s = magmaSources();
+// Generic zoom/pan viewer for any image. `chain` = candidate srcs (fallbacks).
+function openImageViewer(chain) {
+  if (osd) {
+    osd.destroy();
+    osd = null;
+  }
   viewer.classList.add("open");
   document.body.style.overflow = "hidden";
-
-  if (s.tiles) {
-    openWithOSD(s.tilesSrc);
-    return;
-  }
-
   osdHost.style.display = "none";
   vImg.style.display = "block";
+  vImg.src = "";
+  let i = 0;
   const load = new Image();
   load.onload = () => {
     view.natW = load.naturalWidth;
@@ -481,13 +468,24 @@ function openViewer() {
     vImg.src = load.src;
     fitImage();
   };
-  load.src = s.full;
-  // If full res fails, fall back to the web version then the raw source.
   load.onerror = () => {
-    if (load.src.indexOf(s.web.split("?")[0]) === -1) load.src = s.web;
-    else if (load.src.indexOf(CONFIG.magmaFallback) === -1) load.src = s.fallback;
+    i += 1;
+    if (i < chain.length) load.src = chain[i];
   };
+  load.src = chain[0];
   $("#viewer-close").focus();
+}
+
+function openViewer() {
+  const s = magmaSources();
+  if (s.tiles) {
+    viewer.classList.add("open");
+    document.body.style.overflow = "hidden";
+    openWithOSD(s.tilesSrc);
+    $("#viewer-close").focus();
+    return;
+  }
+  openImageViewer([s.full, s.web, s.fallback]);
 }
 
 function closeViewer() {
@@ -616,10 +614,7 @@ async function openWithOSD(tileSrc) {
 
 /* ---------- Global keyboard ---------- */
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    if (viewer.classList.contains("open")) closeViewer();
-    else if (lb.classList.contains("open")) closeLightbox();
-  }
+  if (e.key === "Escape" && viewer.classList.contains("open")) closeViewer();
 });
 
 /* ---------- Go ---------- */

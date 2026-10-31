@@ -72,7 +72,7 @@ TOK_B = "￺"
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp"}
 VIDEO_EXTS = {".mp4", ".webm", ".mov", ".m4v"}
 AVATAR_MAX = 128
-ATTACH_MAX = 1600
+ATTACH_MAX = 2560  # big enough to zoom into inside the viewer
 EMOJI_MAX = 64
 DECOR_MAX = 640
 
@@ -168,13 +168,6 @@ def emit_image(src, src_ext, out_dir_abs, stem, max_dim, cache, ctx):
     Copy/optimise one image into out_dir_abs/stem.* and return (web_path, is_new).
     Uses the cache to avoid reprocessing unchanged sources. Honours dry-run.
     """
-    try:
-        data = _load_source_bytes(src)
-    except Exception as e:
-        print(f"  ! skipped image ({e}): {src[1] if len(src) > 1 else src}")
-        return None, False
-
-    src_hash = sha1_bytes(data)
     ext = (src_ext or "").lower()
     # Preserve animation for gif; otherwise prefer webp when Pillow is available.
     if ext == ".gif":
@@ -188,6 +181,19 @@ def emit_image(src, src_ext, out_dir_abs, stem, max_dim, cache, ctx):
     web = web_path(dest_abs)
     cache.touch(web)
 
+    # Remote media is immutable: once produced, never re-download on later builds
+    # (Discord signed URLs expire). Skip without fetching.
+    if (not ctx["force"] and src[0] == "url"
+            and os.path.exists(dest_abs) and web in cache.data):
+        return web, False
+
+    try:
+        data = _load_source_bytes(src)
+    except Exception as e:
+        print(f"  ! skipped image ({e}): {src[1] if len(src) > 1 else src}")
+        return None, False
+
+    src_hash = sha1_bytes(data)
     if not ctx["force"] and os.path.exists(dest_abs) and cache.current(web, src_hash):
         return web, False  # up to date
 
@@ -224,15 +230,19 @@ def emit_image(src, src_ext, out_dir_abs, stem, max_dim, cache, ctx):
 
 def emit_raw(src, out_dir_abs, out_name, cache, ctx):
     """Copy/download a file verbatim (no image processing). For videos."""
+    dest_abs = os.path.join(out_dir_abs, out_name)
+    web = web_path(dest_abs)
+    cache.touch(web)
+    # Remote media is immutable: skip re-download once produced (URLs expire).
+    if (not ctx["force"] and src[0] == "url"
+            and os.path.exists(dest_abs) and web in cache.data):
+        return web, False
     try:
         data = _load_source_bytes(src)
     except Exception as e:
         print(f"  ! skipped file ({e})")
         return None, False
     h = sha1_bytes(data)
-    dest_abs = os.path.join(out_dir_abs, out_name)
-    web = web_path(dest_abs)
-    cache.touch(web)
     if not ctx["force"] and os.path.exists(dest_abs) and cache.current(web, h):
         return web, False
     if ctx["dry_run"]:
