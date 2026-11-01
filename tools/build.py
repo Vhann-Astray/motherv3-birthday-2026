@@ -414,8 +414,12 @@ def _search(block, pattern, flags=0, group=1):
     return m.group(group) if m else None
 
 
-def parse_discord_html(cache, ctx, counters):
-    """Parse saved Discord web-client pages from inbox/discord-html/*.html."""
+def parse_discord_html(cache, ctx, counters, hidden_ids, hidden_authors):
+    """Parse saved Discord web-client pages from inbox/discord-html/*.html.
+
+    Hidden messages (by id or author) are dropped here, BEFORE merging, so
+    hiding always wins over merging.
+    """
     by_id = {}
     if not os.path.isdir(INBOX_DISCORD_HTML):
         return by_id
@@ -473,6 +477,12 @@ def parse_discord_html(cache, ctx, counters):
                 avatar_url, uid = last_avatar, uid or last_uid
             else:
                 last_avatar, last_uid = avatar_url, uid or last_uid
+
+            # Hiding wins over merging: drop hidden messages now so they are
+            # never folded into (nor absorb) a neighbouring message.
+            if mid in hidden_ids or (author or "").lower() in hidden_authors:
+                counters["hidden"] += 1
+                continue
 
             date = _search(
                 block,
@@ -1149,10 +1159,21 @@ def main():
         m["id"] for m in prev_msgs
     }
 
+    # Hidden sets (so HTML hiding wins over merging — applied during parsing).
+    _ov = read_json(OVERRIDES_JSON, default={}) or {}
+    hidden_ids = {
+        k for k, v in _ov.items() if isinstance(v, dict) and v.get("hidden")
+    }
+    hidden_authors = {
+        a.lower() for a in _ov.get("__hiddenAuthors__", []) if isinstance(a, str)
+    }
+
     # Gather messages: Discord JSON, then saved HTML (merged by id, newest edit
     # wins), then manual (manual always wins on an id clash).
     by_id = parse_discord_exports(cache, ctx, counters)
-    for mid, msg in parse_discord_html(cache, ctx, counters).items():
+    for mid, msg in parse_discord_html(
+        cache, ctx, counters, hidden_ids, hidden_authors
+    ).items():
         prev = by_id.get(mid)
         if prev is None or parse_ts(msg["_edited"]) >= parse_ts(prev["_edited"]):
             by_id[mid] = msg

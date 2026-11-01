@@ -1,6 +1,6 @@
 {
   "__comment__": "Per-message tweaks, keyed by message id. All fields optional: lang ('FR'|'EN'|null), content (corrected text), author (display name), hidden (true removes it), pinned (true keeps it on top). '__hiddenAuthors__' hides every message from the listed display names (e.g. a noisy bot). build.py never rewrites this file.",
-  "__hiddenAuthors__": [],
+  "__hiddenAuthors__": ["[!] poopy"],
   "1565022912707305684": {
     "hidden": true
   },
@@ -11,6 +11,9 @@
     "hidden": true
   },
   "1566143322018414734": {
+    "hidden": true
+  },
+  "1566242549490913365": {
     "hidden": true
   }
 }
