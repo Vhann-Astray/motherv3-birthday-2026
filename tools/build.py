@@ -853,10 +853,14 @@ def parse_manual(cache, ctx, counters):
 # --------------------------------------------------------------------------- #
 def apply_overrides(by_id, counters):
     overrides = read_json(OVERRIDES_JSON, default={}) or {}
+    # Authors to hide entirely (e.g. a noisy bot), by display name (case-insensitive).
+    hidden_authors = {
+        a.lower() for a in overrides.get("__hiddenAuthors__", []) if isinstance(a, str)
+    }
     result = {}
     for mid, msg in by_id.items():
         ov = overrides.get(mid, {})
-        if ov.get("hidden"):
+        if ov.get("hidden") or (msg.get("author", "").lower() in hidden_authors):
             counters["hidden"] += 1
             continue
         if "lang" in ov:
