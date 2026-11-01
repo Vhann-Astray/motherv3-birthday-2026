@@ -586,16 +586,30 @@ def parse_discord_html(cache, ctx, counters):
                     if sweb and sweb not in stickers:
                         stickers.append(sweb)
 
-            has_body = content or images or videos or youtube
-            # A sticker sent right after a message by the same author is folded
-            # into that message instead of standing alone.
-            if (not has_body and stickers and prev_entry is not None
+            has_text = bool(content)
+            has_media = bool(images or videos or youtube or stickers)
+            # A text-less follow-up (image / video / sticker / YouTube only) sent
+            # right after a message by the same author is folded into it, so a
+            # "Happy birthday" + its drawing show up as one card.
+            if (not has_text and has_media and prev_entry is not None
                     and prev_entry.get("author") == (author or "unknown")):
-                sl = prev_entry.setdefault("stickers", [])
+                pe = prev_entry
+                for im in images:
+                    if im not in pe["images"]:
+                        pe["images"].append(im)
+                seen_v = {v["src"] for v in pe["videos"]}
+                for v in videos:
+                    if v["src"] not in seen_v:
+                        pe["videos"].append(v)
+                        seen_v.add(v["src"])
+                for y in youtube:
+                    if y not in pe["youtube"]:
+                        pe["youtube"].append(y)
+                sl = pe.setdefault("stickers", [])
                 sl.extend(s for s in stickers if s not in sl)
                 continue
 
-            if not has_body and not stickers:
+            if not has_text and not has_media:
                 continue
 
             avatar = None
