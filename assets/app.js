@@ -340,7 +340,28 @@ document.addEventListener("click", (e) => {
     return;
   }
   // Direct children of .attach are real images (not the YT thumbnail).
-  if (e.target.matches(".attach > img")) openImageViewer([e.target.src]);
+  if (e.target.matches(".attach > img")) {
+    const attach = e.target.parentElement;
+    // Build a gallery from this message's attachments (images + videos).
+    // YouTube facades stay inline, so they're skipped here.
+    const items = [...attach.children]
+      .map((el) => {
+        if (el.tagName === "IMG") return { type: "image", src: el.src };
+        if (el.tagName === "VIDEO")
+          return {
+            type: "video",
+            src: el.getAttribute("src"),
+            poster: el.getAttribute("poster"),
+          };
+        return null;
+      })
+      .filter(Boolean);
+    const start = Math.max(
+      0,
+      items.findIndex((it) => it.type === "image" && it.src === e.target.src)
+    );
+    openGallery(items, start);
+  }
 });
 
 function loadYouTube(el) {
@@ -372,8 +393,18 @@ const magmaImg = $("#magma-img");
 const viewer = $("#viewer");
 const stage = $("#viewer-stage");
 const vImg = $("#viewer-img");
+const vVideo = $("#viewer-video");
 const osdHost = $("#viewer-osd");
+const navPrev = $("#viewer-prev");
+const navNext = $("#viewer-next");
+const counter = $("#viewer-count");
 let osd = null; // OpenSeadragon instance when tiles are used
+
+// Gallery state: when a message has several attachments, the viewer flips
+// through them (arrows + ← →). Each item is {type:'image'|'video', src, poster}.
+let gallery = [];
+let gIndex = 0;
+const curIsVideo = () => gallery[gIndex] && gallery[gIndex].type === "video";
 
 function magmaSources() {
   const v = version.magma ? `?v=${version.magma}` : "";
@@ -460,8 +491,7 @@ function zoomAt(cx, cy, factor) {
   applyTransform();
 }
 
-// Generic zoom/pan viewer for any image. `chain` = candidate srcs (fallbacks).
-function openImageViewer(chain) {
+function openViewerShell() {
   if (osd) {
     osd.destroy();
     osd = null;
@@ -469,6 +499,13 @@ function openImageViewer(chain) {
   viewer.classList.add("open");
   document.body.style.overflow = "hidden";
   osdHost.style.display = "none";
+}
+
+// Show a single image (chain = fallback srcs) in the zoom/pan stage.
+function showImage(chain) {
+  vVideo.pause();
+  vVideo.removeAttribute("src");
+  vVideo.style.display = "none";
   vImg.style.display = "block";
   vImg.src = "";
   let i = 0;
@@ -484,8 +521,69 @@ function openImageViewer(chain) {
     if (i < chain.length) load.src = chain[i];
   };
   load.src = chain[0];
+}
+
+// Show a video (no zoom; native controls). Autoplays on navigation; if the
+// browser blocks sound, retry muted so playback still starts.
+function showVideo(item) {
+  vImg.style.display = "none";
+  vVideo.style.display = "block";
+  if (item.poster) vVideo.poster = item.poster;
+  else vVideo.removeAttribute("poster");
+  vVideo.muted = false;
+  vVideo.src = item.src;
+  vVideo.load();
+  const p = vVideo.play();
+  if (p && p.catch) {
+    p.catch(() => {
+      vVideo.muted = true;
+      vVideo.play().catch(() => {});
+    });
+  }
+}
+
+// Generic single-image viewer (Magma non-tiled). No gallery navigation.
+function openImageViewer(chain) {
+  gallery = [];
+  openViewerShell();
+  updateNav();
+  showImage(chain);
   $("#viewer-close").focus();
 }
+
+// Gallery viewer for a message's attachments (images + videos).
+function openGallery(items, start) {
+  if (!items.length) return;
+  gallery = items;
+  gIndex = start || 0;
+  openViewerShell();
+  showGalleryItem();
+  updateNav();
+  $("#viewer-close").focus();
+}
+
+function showGalleryItem() {
+  const it = gallery[gIndex];
+  if (!it) return;
+  if (it.type === "video") showVideo(it);
+  else showImage([it.src]);
+}
+
+function navGallery(delta) {
+  if (gallery.length < 2) return;
+  gIndex = (gIndex + delta + gallery.length) % gallery.length;
+  showGalleryItem();
+  updateNav();
+}
+
+function updateNav() {
+  const multi = gallery.length > 1;
+  viewer.classList.toggle("has-gallery", multi);
+  if (multi) counter.textContent = `${gIndex + 1} / ${gallery.length}`;
+}
+
+navPrev.addEventListener("click", () => navGallery(-1));
+navNext.addEventListener("click", () => navGallery(1));
 
 function openViewer() {
   const s = magmaSources();
@@ -500,10 +598,14 @@ function openViewer() {
 }
 
 function closeViewer() {
-  viewer.classList.remove("open");
+  viewer.classList.remove("open", "has-gallery");
   document.body.style.overflow = "";
   pointers.clear();
   pinchPrev = null;
+  gallery = [];
+  vVideo.pause();
+  vVideo.removeAttribute("src");
+  vVideo.style.display = "none";
   if (osd) {
     osd.destroy();
     osd = null;
@@ -514,7 +616,7 @@ function closeViewer() {
 stage.addEventListener(
   "wheel",
   (e) => {
-    if (osd) return;
+    if (osd || curIsVideo()) return;
     e.preventDefault();
     const r = stage.getBoundingClientRect();
     const factor = Math.exp(-e.deltaY * 0.0015);
@@ -524,14 +626,14 @@ stage.addEventListener(
 );
 
 stage.addEventListener("pointerdown", (e) => {
-  if (osd) return;
+  if (osd || curIsVideo()) return;
   stage.setPointerCapture(e.pointerId);
   pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
   stage.classList.add("panning");
 });
 
 stage.addEventListener("pointermove", (e) => {
-  if (osd || !pointers.has(e.pointerId)) return;
+  if (osd || curIsVideo() || !pointers.has(e.pointerId)) return;
   const prev = pointers.get(e.pointerId);
   pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
 
@@ -561,7 +663,7 @@ stage.addEventListener("pointercancel", endPointer);
 
 // Double-click / double-tap toggles between fit and a closer zoom.
 stage.addEventListener("dblclick", (e) => {
-  if (osd) return;
+  if (osd || curIsVideo()) return;
   const r = stage.getBoundingClientRect();
   const atFit = Math.abs(view.scale - view.min) < 0.01;
   zoomAt(e.clientX - r.left, e.clientY - r.top, atFit ? 3 : view.min / view.scale);
@@ -569,12 +671,12 @@ stage.addEventListener("dblclick", (e) => {
 
 $("#viewer-reset").addEventListener("click", () => {
   if (osd) osd.viewport.goHome();
-  else fitImage();
+  else if (!curIsVideo()) fitImage();
 });
 $("#viewer-close").addEventListener("click", closeViewer);
 
 window.addEventListener("resize", () => {
-  if (viewer.classList.contains("open") && !osd) fitImage();
+  if (viewer.classList.contains("open") && !osd && !curIsVideo()) fitImage();
 });
 
 /* ----- OpenSeadragon branch (only when tiles exist) ----- */
@@ -626,7 +728,10 @@ async function openWithOSD(tileSrc) {
 
 /* ---------- Global keyboard ---------- */
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && viewer.classList.contains("open")) closeViewer();
+  if (!viewer.classList.contains("open")) return;
+  if (e.key === "Escape") closeViewer();
+  else if (e.key === "ArrowLeft") navGallery(-1);
+  else if (e.key === "ArrowRight") navGallery(1);
 });
 
 /* ---------- Go ---------- */

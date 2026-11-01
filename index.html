@@ -86,13 +86,17 @@
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Image viewer">
   <div class="viewer-stage" id="viewer-stage">
     <img class="viewer-img" id="viewer-img" alt="Community Magma board (full resolution)" draggable="false">
+    <video class="viewer-video" id="viewer-video" controls playsinline preload="metadata"></video>
     <div class="viewer-osd" id="viewer-osd"></div>
   </div>
+  <button class="viewer-nav prev" id="viewer-prev" type="button" aria-label="Previous">‹</button>
+  <button class="viewer-nav next" id="viewer-next" type="button" aria-label="Next">›</button>
+  <div class="viewer-count" id="viewer-count" aria-live="polite"></div>
   <div class="viewer-toolbar">
     <button class="btn" id="viewer-reset" type="button">Reset</button>
     <button class="btn" id="viewer-close" type="button" aria-label="Close viewer">Close ✕</button>
   </div>
-  <div class="viewer-hint">Scroll / pinch to zoom · drag to pan · double-click to toggle · Esc to close</div>
+  <div class="viewer-hint">Scroll / pinch to zoom · drag to pan · double-click to toggle · ← → to switch · Esc to close</div>
 </div>
 
 <script src="assets/app.js" defer></script>
