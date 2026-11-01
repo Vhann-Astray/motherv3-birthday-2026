@@ -588,12 +588,19 @@ def parse_discord_html(cache, ctx, counters):
 
             has_text = bool(content)
             has_media = bool(images or videos or youtube or stickers)
-            # A text-less follow-up (image / video / sticker / YouTube only) sent
-            # right after a message by the same author is folded into it, so a
-            # "Happy birthday" + its drawing show up as one card.
-            if (not has_text and has_media and prev_entry is not None
-                    and prev_entry.get("author") == (author or "unknown")):
+            if not has_text and not has_media:
+                continue  # truly empty
+
+            # Fold any follow-up from the same author as the previous message
+            # into it, so one person's consecutive messages form a single card
+            # (text concatenated, media combined).
+            if prev_entry is not None and prev_entry.get("author") == (author or "unknown"):
                 pe = prev_entry
+                if content:
+                    pe["content"] = (pe["content"] + "\n\n" + content) if pe["content"] else content
+                    pe["lang"] = detect_lang(
+                        re.sub(r"%s[^%s]*%s" % (TOK_A, TOK_B, TOK_B), " ", pe["content"])
+                    )
                 for im in images:
                     if im not in pe["images"]:
                         pe["images"].append(im)
@@ -607,9 +614,6 @@ def parse_discord_html(cache, ctx, counters):
                         pe["youtube"].append(y)
                 sl = pe.setdefault("stickers", [])
                 sl.extend(s for s in stickers if s not in sl)
-                continue
-
-            if not has_text and not has_media:
                 continue
 
             avatar = None
