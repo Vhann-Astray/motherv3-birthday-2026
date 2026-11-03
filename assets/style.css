@@ -61,14 +61,14 @@ header.hero, main, footer { position: relative; z-index: 1; }
 }
 .bats { position: absolute; inset: 0; }
 .bat {
-  position: absolute; font-size: 26px; opacity: .8;
+  position: absolute; font-size: 78px; opacity: .8;
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .5));
   animation: batFloat 8s ease-in-out infinite;
 }
-.bat.b1 { top: 120px; left: 22%; font-size: 30px; animation-duration: 9s; }
-.bat.b2 { top: 230px; left: 70%; font-size: 22px; animation-duration: 7.5s; animation-delay: -2s; }
-.bat.b3 { top: 400px; left: 33%; font-size: 20px; animation-duration: 10s; animation-delay: -4s; }
-.bat.b4 { top: 330px; left: 60%; font-size: 26px; animation-duration: 8.5s; animation-delay: -1s; }
+.bat.b1 { top: 120px; left: 22%; font-size: 90px; animation-duration: 9s; }
+.bat.b2 { top: 230px; left: 70%; font-size: 66px; animation-duration: 7.5s; animation-delay: -2s; }
+.bat.b3 { top: 400px; left: 33%; font-size: 60px; animation-duration: 10s; animation-delay: -4s; }
+.bat.b4 { top: 330px; left: 60%; font-size: 78px; animation-duration: 8.5s; animation-delay: -1s; }
 @keyframes batFloat {
   0%, 100% { transform: translate(0, 0) rotate(-7deg); }
   50% { transform: translate(22px, -16px) rotate(7deg); }
